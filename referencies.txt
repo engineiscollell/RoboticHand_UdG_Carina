@@ -1,0 +1,5 @@
+TFG GerardM: 
+    Repositori: https://github.com/GerardM55/TFG/tree/main/Scripts%20finales
+
+Treball Eloi amb ESP32 mostreig senyal EMG:
+    Carpeta Drive EMG
