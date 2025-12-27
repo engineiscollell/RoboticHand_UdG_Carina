@@ -1,4 +1,2 @@
 referencies.txt
-provesEMG_Ninapro_df\s1\S1_A1_E1.mat
-provesEMG_Ninapro_df\s1\S1_A1_E2.mat
-provesEMG_Ninapro_df\s1\S1_A1_E3.mat
+provesEMG_Ninapro_df/s1/*.mat
