@@ -14,12 +14,17 @@ Servo servo;
 // Constants senyal EMG (s'han d'ajustar cada cop que es facin proves)
 const int llindar1 = 1000;
 const int llindar2 = 2000;
-const unsigned long lockoutTime = 500; // ms
+
+// temps màxim per decidir si el que sembla T1 acaba sent T2
+const unsigned long DECISION_MS = 100;
+bool pending = false;
+unsigned long tPending = 0;
+
+const unsigned long lockoutTime = 250; // ms
 
 // Constants control
 unsigned long ultimEvent = 0;
-bool armT1 = true;
-bool armT2 = true;
+bool arm = true;
 
 enum Estat
 {
@@ -45,6 +50,38 @@ void aplicaEstat(Estat e)
     {
         digitalWrite(movA, LOW);
         digitalWrite(movB, LOW);
+    }
+}
+
+void aplicaEventT1()
+{
+    if (estat == REPOS)
+    {
+        estat = POS1;
+    }
+    else if (estat == POS1)
+    {
+        estat = REPOS;
+    }
+    else if (estat == POS2)
+    {
+        estat = POS1;
+    }
+}
+
+void aplicaEventT2()
+{
+    if (estat == REPOS)
+    {
+        estat = POS2;
+    }
+    else if (estat == POS1)
+    {
+        estat = POS2;
+    }
+    else if (estat == POS2)
+    {
+        estat = REPOS;
     }
 }
 
@@ -77,51 +114,48 @@ void loop()
     bool superaT2 = (v >= llindar2);
 
     if (!superaT1)
-        armT1 = true;
-    if (!superaT2)
-        armT2 = true;
-
-    bool eventT2 = superaT2 && armT2 && ((ara - ultimEvent) > lockoutTime);
-    bool eventT1 = superaT1 && armT1 && ((ara - ultimEvent) > lockoutTime) && !eventT2;
-
-    if (eventT2)
     {
-        armT2 = false;
-        ultimEvent = ara;
+        arm = true;
 
-        Serial.println(">>> EVENT T2!");
+        if (pending)
+        {
+            aplicaEventT1();
+            ultimEvent = ara;
+            pending = false;
+            arm = false;
 
-        // Regles amb T2
-        if (estat == REPOS) {
-            estat = POS2;
-        }
-        else if (estat == POS1) {
-            estat = POS2;
-        }
-        else if (estat == POS2) {
-            estat = REPOS;
-        }
-    }
-    else if (eventT1)
-    {
-        armT1 = false;
-        ultimEvent = ara;
-
-        Serial.println(">>> EVENT T1!");
-
-        // Regles amb T1
-        if (estat == REPOS) {
-            estat = POS1;
-        }
-        else if (estat == POS1) {
-            estat = REPOS;
-        }
-        else if (estat == POS2) {
-            estat = POS1;
+            Serial.print("EVENT T1 (cau sota T1) ");
+            aplicaEstat(estat);
         }
     }
 
-    aplicaEstat(estat);
+    // Si no estem en mode decisió, i detectem T1 (armats), entrem en pending
+    if (!pending && arm && superaT1 && ((ara - ultimEvent) > lockoutTime))
+    {
+        pending = true;
+        tPending = ara;
+        arm = false;
+    }
+
+    if (pending) {
+        // Si durant la finestra arriba a T2, guanya T2 immediatament
+        if (superaT2) {
+            aplicaEventT2();
+            ultimEvent = ara;
+            pending = false;
+
+            Serial.print("EVENT T2");
+            aplicaEstat(estat);
+        }
+        else if ((ara - tPending) >= DECISION_MS) {
+            aplicaEventT1();
+            ultimEvent = ara;
+            pending = false;
+
+            Serial.print("EVENT T1");
+            aplicaEstat(estat);
+        }
+    }
 
     delay(1);
 }
