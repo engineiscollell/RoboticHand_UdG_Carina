@@ -11,10 +11,6 @@ const int servoPin = 27;
 
 Servo servo;
 
-// Constants servomotors
-bool servoActiu = false; // true = girant, false = aturat
-bool sentit = true;      // true = sentit A, false = sentit B
-
 // Variables per distingir moviments
 int cnt = 0;                              // Comptar els polsos per identificar moviment desitjat
 const unsigned long finestraTemps = 3000; // ms (es pot ajustar)
@@ -26,13 +22,6 @@ const unsigned long lockoutTime = 500; // ms
 // Constants control
 unsigned long ultimPols = 0;
 bool emgAnterior = false;
-
-/*
-// Declaracio interrupcio
-void intPics() {
-  contES++;
-}
-*/
 
 bool esMajorQueLlindar(int valor) {
   return valor > llindar;
@@ -104,7 +93,6 @@ void loop()
     }
     else 
     {
-        // Es vol fer movB
         digitalWrite(movA, LOW);
         digitalWrite(movB, LOW);
     }
