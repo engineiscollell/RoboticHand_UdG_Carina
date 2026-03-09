@@ -13,7 +13,7 @@ const int llindar = 600;
 const unsigned long lockoutTime = 500; // ms
 
 // Control detecció
-unsigned long ultimTrigger = 0;
+unsigned long ultimTrigger = 0; // fins que no hagi passat el lockoutTime no detecara res
 bool emgAnterior = false;
 
 // Estat: false = repòs, true = moviment
@@ -47,6 +47,8 @@ void setup() {
 
   // Estat inicial = repòs
   aplicaEstat();
+
+  ultimTrigger = millis() - lockoutTime - 1; //ara es pot detectar desde el principi
 }
 
 // *********** LOOP ************
