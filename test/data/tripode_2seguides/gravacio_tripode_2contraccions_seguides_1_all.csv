@@ -1,12 +1,3 @@
-
---- Recording Started ---
-Signal Type: TRIPOD
-
---- Recording Finished ---
-Is this recording Good or Bad?
-Type G or B
-
-===== CSV DATA START =====
 time_ms,emg_value,signal_type,quality
 70849,459,Tripod,Good
 70850,477,Tripod,Good

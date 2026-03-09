@@ -1,12 +1,3 @@
-
---- Recording Started ---
-Signal Type: REST
-
---- Recording Finished ---
-Is this recording Good or Bad?
-Type G or B
-
-===== CSV DATA START =====
 time_ms,emg_value,signal_type,quality
 114973,447,Rest,Good
 114974,445,Rest,Good
