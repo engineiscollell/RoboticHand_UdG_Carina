@@ -11,7 +11,7 @@
 #define SAMPLE_INTERVAL_US 1000  // 1kHz sampling
 
 // Buffer size
-#define MAX_SAMPLES 6000
+#define MAX_SAMPLES 30000
 
 // Buffers
 uint16_t emgBuffer[MAX_SAMPLES];

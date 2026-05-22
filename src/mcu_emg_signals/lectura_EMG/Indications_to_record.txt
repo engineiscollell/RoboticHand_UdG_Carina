@@ -1,0 +1,16 @@
+﻿Posicions definides:
+
+
+* Rest 
+* Presa_trípode
+
+
+Format senyals en mode .csv, (per curiositat) també he llegit que és fa en format digital (no útil), i en format audio (faria falta equip més competitiu).
+
+
+Type r to start recording Rest.
+Type t to start recording Tripod Grasp.
+Type s to Stop recording anything.
+
+
+He fet dos carpetes una per 8266 i l’altre per 32, configureu port i us hauria de funcionar.
