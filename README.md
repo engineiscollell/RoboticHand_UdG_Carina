@@ -42,7 +42,7 @@ After several iterations, we progressively added reinforcements, anchoring bands
 
 This became a recurring lesson throughout the project: practical robustness consistently mattered more than theoretical elegance.
 
-![Early CAD concepts](cad/addesive_OGversion)
+![Early CAD concepts](cad/addesive_OGversion.jpeg)
 
 ---
 
@@ -86,7 +86,7 @@ The competition involved practical tasks requiring object manipulation, grip rel
 
 Beyond the final ranking, the experience provided direct exposure to multidisciplinary collaboration, iterative hardware development, and user-centered engineering under real constraints.
 
-![In medias res](competition_26_record/IMG_4589)
+![In medias res](competition_26_record/IMG_4589.jpg)
 
 ---
 
